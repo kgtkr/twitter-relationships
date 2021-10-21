@@ -43,9 +43,7 @@ import { Eq as EqString } from "fp-ts/lib/string";
             },
           });
 
-          return new Set(
-            prevFollowers.map(({ user_id }) => user_id.toString())
-          );
+          return new Set(prevFollowers.map(({ user_id }) => user_id));
         })();
 
         const prevFriendsIds = await (async () => {
@@ -69,7 +67,7 @@ import { Eq as EqString } from "fp-ts/lib/string";
             },
           });
 
-          return new Set(prevFriends.map(({ user_id }) => user_id.toString()));
+          return new Set(prevFriends.map(({ user_id }) => user_id));
         })();
 
         const followerIds = await twitter
@@ -160,7 +158,7 @@ import { Eq as EqString } from "fp-ts/lib/string";
             Array.from(
               S.difference(EqString)(
                 requireUserIds,
-                new Set(cachedRequireUsers.map(({ id }) => id.toString()))
+                new Set(cachedRequireUsers.map(({ id }) => id))
               )
             )
           );
@@ -175,12 +173,13 @@ import { Eq as EqString } from "fp-ts/lib/string";
             data: fetchedRequireUsers,
           });
 
-          const userMap = new Map<string, users>();
+          const userMap = new Map<string, unknown>();
+
           for (let user of cachedRequireUsers) {
-            userMap.set(user.id.toString(), user);
+            userMap.set(user.id, user.json);
           }
           for (let user of fetchedRequireUsers) {
-            userMap.set(user.id.toString(), user);
+            userMap.set(user.id, user.json);
           }
 
           for (const ids of Array.from(additionFollowerIds)) {

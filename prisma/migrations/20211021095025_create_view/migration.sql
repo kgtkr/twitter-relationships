@@ -6,7 +6,7 @@ CREATE VIEW ff_record_aggregates AS
         SELECT
             r.id AS ff_record_id
             , d.type AS type
-            , d_r.user_id as user_id
+            , d.user_id as user_id
             , ROW_NUMBER()
                 OVER (
                     PARTITION BY

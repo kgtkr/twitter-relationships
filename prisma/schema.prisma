@@ -9,7 +9,7 @@ datasource db {
 
 model ff_records {
   id         String       @id(map: "pk_ff_records") @db.Uuid
-  user_id    String       @db.Char(20)
+  user_id    String       @db.VarChar(20)
   created_at DateTime     @db.Timestamptz(3)
   type       FFRecordType
 
@@ -21,7 +21,7 @@ model ff_records {
 
 model ff_record_diffs {
   ff_record_id String     @db.Uuid
-  user_id      String     @db.Char(20)
+  user_id      String     @db.VarChar(20)
   type         DiffType
   ff_record    ff_records @relation(fields: [ff_record_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ff_record_diffs_ff_record_id")
 
@@ -29,7 +29,7 @@ model ff_record_diffs {
 }
 
 model user_records {
-  id         String   @db.Char(20)
+  id         String   @db.VarChar(20)
   created_at DateTime @db.Timestamptz(3)
   json       Json
 
@@ -49,13 +49,13 @@ enum FFRecordType {
 // view
 model ff_record_aggregates {
   ff_record_id String @db.Uuid
-  user_id      String @db.Char(20)
+  user_id      String @db.VarChar(20)
 
   @@id([ff_record_id, user_id])
 }
 
 model users {
-  id         String   @id @db.Char(20)
+  id         String   @id @db.VarChar(20)
   created_at DateTime @db.Timestamptz(3)
   json       Json
 }

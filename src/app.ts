@@ -9,7 +9,6 @@ import { mkEmbedUser } from "./mk-embed-user";
 import { inspect } from "util";
 import { PrismaClient, users } from ".prisma/client";
 import { Eq as EqString } from "fp-ts/lib/string";
-import { Decimal } from "@prisma/client/runtime";
 
 (async () => {
   const config = await readConfig();
@@ -107,11 +106,11 @@ import { Decimal } from "@prisma/client/runtime";
             diffs: {
               create: [
                 ...Array.from(additionFollowerIds).map((id) => ({
-                  user_id: new Decimal(id),
+                  user_id: id,
                   type: "ADDITION" as const,
                 })),
                 ...Array.from(deletionFollowerIds).map((id) => ({
-                  user_id: new Decimal(id),
+                  user_id: id,
                   type: "DELETION" as const,
                 })),
               ],
@@ -128,11 +127,11 @@ import { Decimal } from "@prisma/client/runtime";
             diffs: {
               create: [
                 ...Array.from(additionFriendIds).map((id) => ({
-                  user_id: new Decimal(id),
+                  user_id: id,
                   type: "ADDITION" as const,
                 })),
                 ...Array.from(deletionFriendIds).map((id) => ({
-                  user_id: new Decimal(id),
+                  user_id: id,
                   type: "DELETION" as const,
                 })),
               ],
@@ -167,7 +166,7 @@ import { Decimal } from "@prisma/client/runtime";
           );
 
           const fetchedRequireUsers = fetchedRequireUsers_.map((user) => ({
-            id: new Decimal(user.id_str),
+            id: user.id_str,
             created_at: now,
             json: user,
           }));

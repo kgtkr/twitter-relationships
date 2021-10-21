@@ -7,7 +7,7 @@ CREATE TYPE "FFRecordType" AS ENUM ('FOLLOWER', 'FRIEND');
 -- CreateTable
 CREATE TABLE "ff_records" (
     "id" UUID NOT NULL,
-    "user_id" DECIMAL(20,0) NOT NULL,
+    "user_id" CHAR(20) NOT NULL,
     "created_at" TIMESTAMPTZ(3) NOT NULL,
     "type" "FFRecordType" NOT NULL,
 
@@ -17,7 +17,7 @@ CREATE TABLE "ff_records" (
 -- CreateTable
 CREATE TABLE "ff_record_diffs" (
     "ff_record_id" UUID NOT NULL,
-    "user_id" DECIMAL(20,0) NOT NULL,
+    "user_id" CHAR(20) NOT NULL,
     "type" "DiffType" NOT NULL,
 
     CONSTRAINT "pk_ff_record_diffs" PRIMARY KEY ("ff_record_id","user_id")
@@ -25,7 +25,7 @@ CREATE TABLE "ff_record_diffs" (
 
 -- CreateTable
 CREATE TABLE "user_records" (
-    "id" DECIMAL(20,0) NOT NULL,
+    "id" CHAR(20) NOT NULL,
     "created_at" TIMESTAMPTZ(3) NOT NULL,
     "json" JSONB NOT NULL,
 

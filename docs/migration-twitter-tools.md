@@ -50,7 +50,7 @@ INSERT
     INTO
         ff_records (id, user_id, created_at, type)
     SELECT
-        ff_ids.follower_id, TO_NUMBER(ffs.user_id, '99999999999999999999'), ffs.created_at, 'FOLLOWER'
+        ff_ids.follower_id, ffs.user_id, ffs.created_at, 'FOLLOWER'
     FROM
         public_old.ffs AS ffs
     LEFT JOIN
@@ -60,7 +60,7 @@ INSERT
     INTO
         ff_records (id, user_id, created_at, type)
     SELECT
-        ff_ids.friend_id, TO_NUMBER(ffs.user_id, '99999999999999999999'), ffs.created_at, 'FRIEND'
+        ff_ids.friend_id, ffs.user_id, ffs.created_at, 'FRIEND'
     FROM
         public_old.ffs AS ffs
     LEFT JOIN
@@ -70,7 +70,7 @@ INSERT
     INTO
         user_records (id, created_at, json)
     SELECT
-        TO_NUMBER(id, '99999999999999999999'), created_at, raw
+        id, created_at, raw
     FROM
         public_old.raws;
 
@@ -79,7 +79,7 @@ INSERT
         ff_record_diffs (ff_record_id, user_id, type)
     SELECT
         ff_ids.follower_id as ff_record_id
-        , TO_NUMBER(followers.user_id, '99999999999999999999') as user_id
+        , followers.user_id as user_id
         , 'ADDITION'
     FROM
         public_old.followers AS followers
@@ -98,7 +98,7 @@ INSERT
         ff_record_diffs (ff_record_id, user_id, type)
     SELECT
         ff_ids2.follower_id as ff_record_id
-        , TO_NUMBER(followers.user_id, '99999999999999999999') as user_id
+        , followers.user_id as user_id
         , 'DELETION'
     FROM
         public_old.followers AS followers
@@ -119,7 +119,7 @@ INSERT
         ff_record_diffs (ff_record_id, user_id, type)
     SELECT
         ff_ids.friend_id as ff_record_id
-        , TO_NUMBER(friends.user_id, '99999999999999999999') as user_id
+        , friends.user_id as user_id
         , 'ADDITION'
     FROM
         public_old.friends AS friends
@@ -138,7 +138,7 @@ INSERT
         ff_record_diffs (ff_record_id, user_id, type)
     SELECT
         ff_ids2.friend_id as ff_record_id
-        , TO_NUMBER(friends.user_id, '99999999999999999999') as user_id
+        , friends.user_id as user_id
         , 'DELETION'
     FROM
         public_old.friends AS friends

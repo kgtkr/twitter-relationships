@@ -4,7 +4,7 @@ import { createTwit } from "./twit";
 import uuid from "uuid/v4";
 import * as S from "fp-ts/lib/Set";
 import { pipe } from "fp-ts/lib/function";
-import { Discord } from "./adaptors/discord";
+import axios from "axios";
 import { mkEmbedUser } from "./mk-embed-user";
 import { inspect } from "util";
 import { PrismaClient, users } from ".prisma/client";
@@ -20,7 +20,6 @@ import { Decimal } from "@prisma/client/runtime";
       const now = new Date();
       try {
         const twitter = new Twitter(createTwit(token));
-        const discord = new Discord();
 
         const userId = await twitter.fetchAuthUserId();
 
@@ -186,28 +185,28 @@ import { Decimal } from "@prisma/client/runtime";
           }
 
           for (const ids of Array.from(additionFollowerIds)) {
-            await discord.postHook(discord_hook_url, {
+            await axios.post(discord_hook_url, {
               content: "新しいフォロワー",
               embeds: [mkEmbedUser(ids, userMap.get(ids))],
             });
           }
 
           for (const ids of Array.from(deletionFollowerIds)) {
-            await discord.postHook(discord_hook_url, {
+            await axios.post(discord_hook_url, {
               content: "去ったフォロワー",
               embeds: [mkEmbedUser(ids, userMap.get(ids))],
             });
           }
 
           for (const ids of Array.from(additionFriendIds)) {
-            await discord.postHook(discord_hook_url, {
+            await axios.post(discord_hook_url, {
               content: "新しいフォロイー",
               embeds: [mkEmbedUser(ids, userMap.get(ids))],
             });
           }
 
           for (const ids of Array.from(deletionFriendIds)) {
-            await discord.postHook(discord_hook_url, {
+            await axios.post(discord_hook_url, {
               content: "去ったフォロイー",
               embeds: [mkEmbedUser(ids, userMap.get(ids))],
             });

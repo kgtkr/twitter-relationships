@@ -1,8 +1,6 @@
 import * as t from "io-ts";
-import lazyValue from "lazy-value";
 import yaml from "js-yaml";
-import * as fs from "fs-extra";
-import { eitherUnwrap } from "./utils";
+import { promises as fs } from "fs";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 

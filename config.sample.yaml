@@ -1,0 +1,8 @@
+accounts:
+  - discord_hook_url: https://
+    token:
+      tk: aaa
+      ts: bbb
+      ck: xxx
+      cs: yyy
+interval: 3600

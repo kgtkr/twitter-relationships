@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ff_records {
+  id         String       @id(map: "pk_ff_records") @db.Uuid
+  user_id    Decimal      @db.Decimal(20, 0)
+  created_at DateTime     @db.Timestamptz(3)
+  type       FFRecordType
+
+  diffs ff_record_diffs[]
+
+  @@index([created_at], map: "idx_ff_records_created_at")
+  @@index([user_id], map: "idx_ff_records_user_id")
+}
+
+model ff_record_diffs {
+  ff_record_id String     @db.Uuid
+  user_id      Decimal    @db.Decimal(20, 0)
+  type         DiffType
+  ff_record    ff_records @relation(fields: [ff_record_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ff_record_diffs_ff_record_id")
+
+  @@id([ff_record_id, user_id], map: "pk_ff_record_diffs")
+}
+
+model user_records {
+  id         Decimal  @db.Decimal(20, 0)
+  created_at DateTime @db.Timestamptz(3)
+  json       Json
+
+  @@id([id, created_at], map: "pk_user_records")
+}
+
+enum DiffType {
+  ADDITION
+  DELETION
+}
+
+enum FFRecordType {
+  FOLLOWER
+  FRIEND
+}
+
+// view
+model ff_record_aggregates {
+  ff_record_id String  @db.Uuid
+  user_id      Decimal @db.Decimal(20, 0)
+
+  @@id([ff_record_id, user_id])
+}
+
+model users {
+  id         Decimal  @db.Decimal(20, 0)
+  created_at DateTime @db.Timestamptz(3)
+  json       Json
+
+  @@id([id])
+}

@@ -25,7 +25,7 @@ export type Config = t.TypeOf<typeof configType>;
 
 export async function readConfig(): Promise<Config> {
   const text = await fs.readFile("config.yaml", "utf8");
-  const data = yaml.safeLoad(text);
+  const data = yaml.load(text);
   return pipe(
     configType.decode(data),
     E.getOrElse((_e): Config => {

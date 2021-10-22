@@ -1,7 +1,7 @@
 import { readConfig } from "./config";
 import { Twitter } from "./adaptors/twitter";
 import { createTwit } from "./twit";
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import * as S from "fp-ts/lib/Set";
 import { pipe } from "fp-ts/lib/function";
 import axios from "axios";

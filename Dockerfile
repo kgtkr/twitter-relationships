@@ -1,7 +1,7 @@
 FROM node:16.9.0-slim
 
 RUN apt update && \
-    apt install libssl-dev -y
+    apt install openssl -y
 
 ENV HOME=/home/app
 

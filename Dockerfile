@@ -1,5 +1,7 @@
 FROM node:16.9.0-alpine
 
+RUN apk add --update --no-cache openssl
+
 ENV HOME=/home/app
 
 WORKDIR $HOME

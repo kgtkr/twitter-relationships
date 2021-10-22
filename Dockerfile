@@ -1,6 +1,7 @@
-FROM node:16.9.0-alpine
+FROM node:16.9.0-slim
 
-RUN apk add --update --no-cache openssl
+RUN apt update && \
+    apt install libssl-dev -y
 
 ENV HOME=/home/app
 

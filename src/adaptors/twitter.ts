@@ -50,7 +50,11 @@ export class Twitter {
           .get("users/lookup", { user_id: ids.join(",") })
           .then((x) => x.data)
           .then((x) => resType.decode(x))
-          .then(eitherUnwrap);
+          .then(eitherUnwrap)
+          .catch((e) => {
+            console.error("lookupUsers:", e);
+            return [];
+          });
       }),
       (ps) => Promise.all(ps).then((x) => array.flatten(x))
     );
